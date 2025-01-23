@@ -22,8 +22,12 @@ export default function Step1() {
   };
 
   useEffect(() => {
-    sessionStorage.setItem("iconBoxStyle", JSON.stringify(iconBoxStyle));
-  }, [iconBoxStyle]);
+    const saved = sessionStorage.getItem("iconBoxStyle");
+
+    if (saved) {
+      setIconBoxStyle(JSON.parse(saved));
+    }
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -102,6 +106,12 @@ export default function Step1() {
           <Link
             href="/step/2"
             className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+            onClick={() => {
+              sessionStorage.setItem(
+                "iconBoxStyle",
+                JSON.stringify(iconBoxStyle),
+              );
+            }}
           >
             Next
           </Link>
