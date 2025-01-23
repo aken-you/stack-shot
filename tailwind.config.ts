@@ -17,11 +17,6 @@ export default {
       height: {
         nav: "64px",
       },
-      screens: {
-        tablet: "640px",
-        laptop: "1024px",
-        desktop: "1280px",
-      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
