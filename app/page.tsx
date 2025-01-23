@@ -13,7 +13,7 @@ export default async function Home() {
       </section>
 
       <Link
-        href="step1"
+        href="step/1"
         className="transform rounded-3xl bg-blue-500 px-10 py-4 text-xl font-semibold text-white shadow-xl transition-colors transition-transform hover:scale-110 hover:bg-blue-700 focus:scale-110"
       >
         지금 시작하기 🚀

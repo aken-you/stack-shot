@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { STEPS } from "@/constants/step";
 import { usePathname } from "next/navigation";
 
-export default function StepLayout({ children }: { children: ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const currentStep = Number(pathname.at(-1));
 
