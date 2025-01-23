@@ -13,3 +13,11 @@ export const INIT_ICON_BOX_STYLE = {
   borderColor: "#E2E2E2",
   boxShadow: "0px 0px 0px #000000",
 };
+
+export const INIT_WRAPPER_BOX_STYLE = {
+  backgroundColor: "#E2E2E2",
+  borderRadius: "8px",
+  borderColor: "#E2E2E2",
+  boxShadow: "0px 0px 0px #000000",
+  color: "#000000",
+};
