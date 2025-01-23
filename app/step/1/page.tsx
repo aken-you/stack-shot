@@ -6,12 +6,12 @@ import { Label } from "@/components/ui/label";
 import { ColorInput } from "@/components/color-input";
 import Preview from "@/components/preview";
 import Link from "next/link";
-import { StyleType } from "@/types/style";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import type { IconBoxStyleType } from "@/types/style";
 
 export default function Step1() {
   const [iconBoxStyle, setIconBoxStyle] =
-    useState<StyleType>(INIT_ICON_BOX_STYLE);
+    useState<IconBoxStyleType>(INIT_ICON_BOX_STYLE);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

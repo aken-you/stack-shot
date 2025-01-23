@@ -1,17 +1,11 @@
 import { Card } from "@/components/ui/card";
 import logoImg from "../app/icon.svg";
 import Image from "next/image";
-
-interface StyleProps {
-  backgroundColor: string;
-  borderRadius: string;
-  borderColor: string;
-  boxShadow: string;
-}
+import type { IconBoxStyleType, WrapperBoxStyleType } from "@/types/style";
 
 interface PreviewProps {
-  iconBoxStyle: StyleProps;
-  wrapperBoxStyle?: StyleProps;
+  iconBoxStyle: IconBoxStyleType;
+  wrapperBoxStyle?: WrapperBoxStyleType;
 }
 
 export default function Preview({
@@ -45,7 +39,14 @@ export default function Preview({
           >
             <Image src={logoImg} width="80" height="80" alt="logo-image" />
           </div>
-          <div className="text-center font-semibold">stack name</div>
+          <div
+            className="text-center font-semibold"
+            style={{
+              color: wrapperBoxStyle?.color ? wrapperBoxStyle.color : "#000000",
+            }}
+          >
+            stack name
+          </div>
         </div>
       </div>
     </Card>
