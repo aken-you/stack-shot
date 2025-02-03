@@ -6,4 +6,3 @@ export interface StyleType {
 }
 
 export type IconBoxStyleType = StyleType;
-export type WrapperBoxStyleType = StyleType & { color: string };
