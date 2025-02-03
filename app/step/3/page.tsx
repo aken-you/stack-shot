@@ -137,26 +137,27 @@ export default function Step3() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between">
-          <Link
-            href="/step/2"
-            className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:bg-blue-100 hover:shadow-md"
-          >
-            Back
-          </Link>
-          <Link
-            href="/step/4"
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
-            onClick={() => {
-              sessionStorage.setItem(
-                "iconBoxStyle",
-                JSON.stringify(iconBoxStyle),
-              );
-            }}
-          >
-            Next
-          </Link>
-        </div>
+      </div>
+
+      <div className="flex justify-between">
+        <Link
+          href="/step/2"
+          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:bg-blue-100 hover:shadow-md"
+        >
+          Back
+        </Link>
+        <Link
+          href="/step/4"
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+          onClick={() => {
+            sessionStorage.setItem(
+              "iconBoxStyle",
+              JSON.stringify(iconBoxStyle),
+            );
+          }}
+        >
+          Next
+        </Link>
       </div>
     </div>
   );
