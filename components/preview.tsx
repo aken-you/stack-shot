@@ -5,14 +5,21 @@ import type { IconBoxStyleType } from "@/types/style";
 interface PreviewProps {
   iconBoxStyle: IconBoxStyleType;
   techs: string[];
+  theme?: "light" | "dark";
 }
 
-export default function Preview({ iconBoxStyle, techs }: PreviewProps) {
+export default function Preview({
+  iconBoxStyle,
+  techs,
+  theme = "light",
+}: PreviewProps) {
   return (
     <Card className="overflow-x-auto bg-slate-100 p-6">
       <div className="flex min-h-[12.5rem] items-center">
         {techs.length > 0 ? (
-          <section className="min-w-[48rem] bg-white px-12 py-9">
+          <section
+            className={`min-w-[48rem] px-12 py-9 ${theme === "dark" ? "bg-neutral-950 text-white" : "bg-white"}`}
+          >
             <div className="grid grid-cols-6">
               {techs.map((tech) => (
                 <TechItem key={tech} name={tech} iconBoxStyle={iconBoxStyle} />
