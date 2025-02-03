@@ -15,7 +15,9 @@ export default function Preview({
 }: PreviewProps) {
   return (
     <Card className="overflow-x-auto bg-slate-100 p-6">
-      <div className="flex min-h-[12.5rem] w-fit items-center">
+      <div
+        className={`flex min-h-[12.5rem] ${techs.length > 0 ? "w-fit" : "w-full"} items-center`}
+      >
         {techs.length > 0 ? (
           <section
             className={`min-w-[47.75rem] px-12 py-9 ${theme === "dark" ? "bg-neutral-950 text-white" : "bg-white"}`}
