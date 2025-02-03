@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const currentStep = Number(pathname.at(-1));
 
   return (
-    <div className="container mx-auto max-w-4xl overflow-x-auto py-10">
+    <div className="container mx-auto max-w-4xl overflow-x-auto px-4 py-10">
       <nav className="mb-10">
         <div className="mb-2 flex justify-between">
           {STEPS.map((step) => (
