@@ -3,12 +3,14 @@ import Image from "next/image";
 import type { IconBoxStyleType } from "@/types/style";
 
 interface PreviewProps {
+  title?: string;
   iconBoxStyle: IconBoxStyleType;
   techs: string[];
   theme?: "light" | "dark";
 }
 
 export default function Preview({
+  title = "",
   iconBoxStyle,
   techs,
   theme = "light",
@@ -20,8 +22,15 @@ export default function Preview({
       >
         {techs.length > 0 ? (
           <section
-            className={`min-w-[47.75rem] px-12 py-9 ${theme === "dark" ? "bg-neutral-950 text-white" : "bg-white"}`}
+            className={`min-w-[47.75rem] px-12 py-9 ${theme === "dark" ? "bg-neutral-950 text-white" : "bg-white"} flex flex-col items-center gap-6`}
           >
+            {title.length > 0 && (
+              <h1
+                className={`${theme === "dark" ? "text-white" : ""} text-2xl font-extrabold tracking-tight`}
+              >
+                {title}
+              </h1>
+            )}
             <div className="grid grid-cols-6">
               {techs.map((tech) => (
                 <TechItem key={tech} name={tech} iconBoxStyle={iconBoxStyle} />
