@@ -54,6 +54,7 @@ function TechItem({
           border: iconBoxStyle.borderColor
             ? `1px solid ${iconBoxStyle.borderColor}`
             : "none",
+          boxShadow: `0 0 10px ${iconBoxStyle.boxShadow}`,
         }}
       >
         <Image src={`../stack/${name}.svg`} width="48" height="48" alt={name} />

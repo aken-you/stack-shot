@@ -11,5 +11,5 @@ export const INIT_ICON_BOX_STYLE = {
   backgroundColor: "#ffffff",
   borderRadius: "8px",
   borderColor: "#E2E2E2",
-  boxShadow: "0px 0px 0px #000000",
+  boxShadow: "transparent",
 };
