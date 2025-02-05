@@ -26,7 +26,7 @@ export default function Step2() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Select Theme</h1>
         <p className="text-muted-foreground text-sm">
@@ -68,7 +68,7 @@ export default function Step2() {
       <div className="flex justify-between">
         <Link
           href="/step/1"
-          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:bg-blue-100 hover:shadow-md"
+          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
         >
           Back
         </Link>
@@ -82,6 +82,6 @@ export default function Step2() {
           Next
         </Link>
       </div>
-    </div>
+    </>
   );
 }

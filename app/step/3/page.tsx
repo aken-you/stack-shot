@@ -44,7 +44,7 @@ export default function Step3() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
           Style Icon Box
@@ -142,7 +142,7 @@ export default function Step3() {
       <div className="flex justify-between">
         <Link
           href="/step/2"
-          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:bg-blue-100 hover:shadow-md"
+          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
         >
           Back
         </Link>
@@ -159,6 +159,6 @@ export default function Step3() {
           Next
         </Link>
       </div>
-    </div>
+    </>
   );
 }

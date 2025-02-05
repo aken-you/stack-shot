@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { IconBoxStyleType } from "@/types/style";
 
 interface PreviewProps {
+  ref?: React.Ref<HTMLDivElement | null>;
   title?: string;
   iconBoxStyle: IconBoxStyleType;
   techs: string[];
@@ -10,6 +11,7 @@ interface PreviewProps {
 }
 
 export default function Preview({
+  ref,
   title = "",
   iconBoxStyle,
   techs,
@@ -22,6 +24,7 @@ export default function Preview({
       >
         {techs.length > 0 ? (
           <section
+            ref={ref}
             className={`min-w-[47.75rem] px-12 py-9 ${theme === "dark" ? "bg-neutral-950 text-white" : "bg-white"} flex flex-col items-center gap-6`}
           >
             {title.length > 0 && (
