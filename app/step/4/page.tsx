@@ -9,6 +9,15 @@ import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import type { IconBoxStyleType } from "@/types/style";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function Step4() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -68,10 +77,10 @@ export default function Step4() {
 
   return (
     <>
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Set Title</h1>
-        <p className="text-muted-foreground text-sm">타이틀을 설정해주세요!</p>
-      </div>
+      <CardHeader>
+        <CardTitle>Set Title</CardTitle>
+        <CardDescription>타이틀을 설정해주세요!</CardDescription>
+      </CardHeader>
 
       <Preview
         ref={previewRef}
@@ -81,24 +90,23 @@ export default function Step4() {
         theme={theme}
       />
 
-      <div className="space-y-2">
+      <CardContent className="space-y-2">
         <Label>Title</Label>
         <Input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="타이틀 (선택 사항)"
         />
-      </div>
+      </CardContent>
 
-      <div className="flex justify-between">
+      <CardFooter className="justify-between">
         <Link
           href="/step/3"
-          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
+          className={cn(buttonVariants({ variant: "outline" }))}
         >
           Back
         </Link>
-        <button
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+        <Button
           onClick={() => {
             sessionStorage.setItem("title", JSON.stringify(title));
 
@@ -106,8 +114,8 @@ export default function Step4() {
           }}
         >
           이미지 생성하기 🚀
-        </button>
-      </div>
+        </Button>
+      </CardFooter>
     </>
   );
 }

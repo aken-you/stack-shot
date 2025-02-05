@@ -38,7 +38,6 @@ export default function Download() {
 
       <div className="mt-4 flex flex-wrap justify-center gap-4">
         <Button
-          className="rounded-md bg-blue-600 text-white transition-colors hover:bg-blue-700 hover:shadow-md"
           size="lg"
           onClick={() => {
             if (!imageUrl) return;
@@ -50,7 +49,6 @@ export default function Download() {
         </Button>
 
         <Button
-          className="rounded-md bg-blue-600 text-white transition-colors hover:bg-blue-700 hover:shadow-md"
           size="lg"
           onClick={() => navigator.clipboard.writeText(imageUrl)}
         >

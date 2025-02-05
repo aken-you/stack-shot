@@ -2,7 +2,14 @@
 
 import Preview from "@/components/preview";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -13,12 +20,13 @@ import {
 } from "@/components/ui/command";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import useGetStackList from "@/hooks/use-get-stack-list";
+import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Step4() {
+export default function Step1() {
   const [keyword, setKeyword] = useState<string>("");
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
 
@@ -48,18 +56,14 @@ export default function Step4() {
 
   return (
     <>
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Select Tech Stack
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          기술 스택을 선택해주세요!
-        </p>
-      </div>
+      <CardHeader>
+        <CardTitle>Select Tech Stack</CardTitle>
+        <CardDescription>기술 스택을 선택해주세요!</CardDescription>
+      </CardHeader>
 
       <Preview iconBoxStyle={INIT_ICON_BOX_STYLE} techs={selectedTechs} />
 
-      <div className="space-y-4">
+      <CardContent>
         <div className="mb-4 flex flex-wrap gap-2">
           {selectedTechs.map((tech) => (
             <Badge key={tech} variant="secondary" className="px-2 py-1 text-sm">
@@ -83,6 +87,7 @@ export default function Step4() {
             </Badge>
           ))}
         </div>
+
         <Command className="rounded-lg border shadow-md">
           <CommandInput
             placeholder="Search tech stack..."
@@ -111,19 +116,19 @@ export default function Step4() {
             </CommandGroup>
           </CommandList>
         </Command>
-      </div>
+      </CardContent>
 
-      <div className="flex justify-end">
+      <CardFooter className="justify-end">
         <Link
           href="/step/2"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+          className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
             sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
           }}
         >
           Next
         </Link>
-      </div>
+      </CardFooter>
     </>
   );
 }
