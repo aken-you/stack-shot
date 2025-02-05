@@ -2,7 +2,7 @@
 
 import Preview from "@/components/preview";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   CardContent,
   CardDescription,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/command";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import useGetStackList from "@/hooks/use-get-stack-list";
+import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -120,7 +121,7 @@ export default function Step1() {
       <CardFooter className="justify-end">
         <Link
           href="/step/2"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+          className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
             sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
           }}

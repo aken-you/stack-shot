@@ -15,6 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Step3() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -145,13 +147,13 @@ export default function Step3() {
       <CardFooter className="justify-between">
         <Link
           href="/step/2"
-          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
+          className={cn(buttonVariants({ variant: "outline" }))}
         >
           Back
         </Link>
         <Link
           href="/step/4"
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+          className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
             sessionStorage.setItem(
               "iconBoxStyle",

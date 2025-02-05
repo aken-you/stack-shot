@@ -16,6 +16,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function Step4() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -100,12 +102,11 @@ export default function Step4() {
       <CardFooter className="justify-between">
         <Link
           href="/step/3"
-          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
+          className={cn(buttonVariants({ variant: "outline" }))}
         >
           Back
         </Link>
-        <button
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+        <Button
           onClick={() => {
             sessionStorage.setItem("title", JSON.stringify(title));
 
@@ -113,7 +114,7 @@ export default function Step4() {
           }}
         >
           이미지 생성하기 🚀
-        </button>
+        </Button>
       </CardFooter>
     </>
   );
