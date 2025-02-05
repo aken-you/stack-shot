@@ -67,7 +67,7 @@ export default function Step4() {
   };
 
   return (
-    <div className="space-y-6">
+    <>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Set Title</h1>
         <p className="text-muted-foreground text-sm">타이틀을 설정해주세요!</p>
@@ -108,6 +108,6 @@ export default function Step4() {
           이미지 생성하기 🚀
         </button>
       </div>
-    </div>
+    </>
   );
 }

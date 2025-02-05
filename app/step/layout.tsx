@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           ))}
         </div>
       </nav>
-      <Card className="p-6">{children}</Card>
+      <Card className="space-y-6 p-6">{children}</Card>
     </div>
   );
 }

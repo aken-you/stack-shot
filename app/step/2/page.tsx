@@ -26,7 +26,7 @@ export default function Step2() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Select Theme</h1>
         <p className="text-muted-foreground text-sm">
@@ -82,6 +82,6 @@ export default function Step2() {
           Next
         </Link>
       </div>
-    </div>
+    </>
   );
 }

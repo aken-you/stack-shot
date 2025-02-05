@@ -44,7 +44,7 @@ export default function Step3() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <>
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
           Style Icon Box
@@ -159,6 +159,6 @@ export default function Step3() {
           Next
         </Link>
       </div>
-    </div>
+    </>
   );
 }
