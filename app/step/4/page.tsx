@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 export default function Step4() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -46,33 +47,46 @@ export default function Step4() {
     }
   }, []);
 
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const handleDownloadPreview = async () => {
     if (!previewRef.current) return;
 
-    const imageData = await htmlToImage.toBlob(previewRef.current);
+    try {
+      setIsUploading(true);
 
-    if (!imageData) return;
+      const imageData = await htmlToImage.toBlob(previewRef.current);
 
-    const formData = new FormData();
-    formData.append("file", imageData);
+      if (!imageData) return;
 
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
+      const formData = new FormData();
+      formData.append("file", imageData);
 
-    const { imageUrl } = await response.json();
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    sessionStorage.removeItem("techStack");
-    sessionStorage.removeItem("theme");
-    sessionStorage.removeItem("iconBoxStyle");
-    sessionStorage.removeItem("title");
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
 
-    sessionStorage.setItem("imageUrl", imageUrl);
-    router.push("/download");
+      const { imageUrl } = await response.json();
+
+      sessionStorage.removeItem("techStack");
+      sessionStorage.removeItem("theme");
+      sessionStorage.removeItem("iconBoxStyle");
+      sessionStorage.removeItem("title");
+
+      sessionStorage.setItem("imageUrl", imageUrl);
+
+      router.push("/download");
+    } catch (_error) {
+      alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -107,12 +121,14 @@ export default function Step4() {
           Back
         </Link>
         <Button
+          disabled={isUploading}
           onClick={() => {
             sessionStorage.setItem("title", JSON.stringify(title));
 
             handleDownloadPreview();
           }}
         >
+          {isUploading && <Loader2 className="animate-spin" />}
           이미지 생성하기 🚀
         </Button>
       </CardFooter>
