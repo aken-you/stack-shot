@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Preview from "@/components/preview";
 import Link from "next/link";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import type { IconBoxStyleType } from "@/types/style";
+import * as htmlToImage from "html-to-image";
+import { useRouter } from "next/navigation";
 
 export default function Step4() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -35,6 +37,35 @@ export default function Step4() {
     }
   }, []);
 
+  const previewRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  const handleDownloadPreview = async () => {
+    if (!previewRef.current) return;
+
+    const imageData = await htmlToImage.toBlob(previewRef.current);
+
+    if (!imageData) return;
+
+    const formData = new FormData();
+    formData.append("file", imageData);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const { imageUrl } = await response.json();
+
+    sessionStorage.removeItem("techStack");
+    sessionStorage.removeItem("theme");
+    sessionStorage.removeItem("iconBoxStyle");
+    sessionStorage.removeItem("title");
+
+    sessionStorage.setItem("imageUrl", imageUrl);
+    router.push("/download");
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -43,6 +74,7 @@ export default function Step4() {
       </div>
 
       <Preview
+        ref={previewRef}
         title={title}
         iconBoxStyle={iconBoxStyle}
         techs={selectedTechs}
@@ -58,13 +90,23 @@ export default function Step4() {
         />
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-between">
         <Link
-          href="step/1"
-          className="transform rounded-3xl bg-blue-500 px-6 py-2 text-xl font-semibold text-white shadow-xl transition-colors transition-transform hover:scale-110 hover:bg-blue-700 focus:scale-110"
+          href="/step/3"
+          className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
         >
-          완성 🚀
+          Back
         </Link>
+        <button
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-700 hover:shadow-md"
+          onClick={() => {
+            sessionStorage.setItem("title", JSON.stringify(title));
+
+            handleDownloadPreview();
+          }}
+        >
+          이미지 생성하기 🚀
+        </button>
       </div>
     </div>
   );
