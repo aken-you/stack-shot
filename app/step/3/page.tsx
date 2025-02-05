@@ -8,6 +8,13 @@ import Preview from "@/components/preview";
 import Link from "next/link";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import type { IconBoxStyleType } from "@/types/style";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Step3() {
   const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
@@ -45,14 +52,10 @@ export default function Step3() {
 
   return (
     <>
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          Style Icon Box
-        </h1>
-        <p className="text-muted-foreground text-sm">
-          아이콘 박스의 스타일을 설정해주세요!
-        </p>
-      </div>
+      <CardHeader>
+        <CardTitle>Style Icon Box</CardTitle>
+        <CardDescription>아이콘 박스의 스타일을 설정해주세요!</CardDescription>
+      </CardHeader>
 
       <Preview
         iconBoxStyle={iconBoxStyle}
@@ -60,7 +63,7 @@ export default function Step3() {
         theme={theme}
       />
 
-      <div className="grid gap-6">
+      <CardContent className="grid gap-6">
         {/* background */}
         <div>
           <h3 className="mb-2 text-lg font-bold">Background</h3>
@@ -137,9 +140,9 @@ export default function Step3() {
             </div>
           </div>
         </div>
-      </div>
+      </CardContent>
 
-      <div className="flex justify-between">
+      <CardFooter className="justify-between">
         <Link
           href="/step/2"
           className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
@@ -158,7 +161,7 @@ export default function Step3() {
         >
           Next
         </Link>
-      </div>
+      </CardFooter>
     </>
   );
 }

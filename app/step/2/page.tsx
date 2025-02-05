@@ -6,6 +6,13 @@ import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
+import {
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Step2() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -27,12 +34,10 @@ export default function Step2() {
 
   return (
     <>
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Select Theme</h1>
-        <p className="text-muted-foreground text-sm">
-          이미지 테마를 선택해주세요!
-        </p>
-      </div>
+      <CardHeader>
+        <CardTitle>Select Theme</CardTitle>
+        <CardDescription>이미지 테마를 선택해주세요!</CardDescription>
+      </CardHeader>
 
       <Preview
         iconBoxStyle={INIT_ICON_BOX_STYLE}
@@ -40,7 +45,7 @@ export default function Step2() {
         theme={theme}
       />
 
-      <div className="grid grid-cols-2 space-x-4">
+      <CardContent className="grid grid-cols-2 space-x-4">
         <Button
           variant="outline"
           size="lg"
@@ -63,9 +68,9 @@ export default function Step2() {
           <Moon />
           <span>dark</span>
         </Button>
-      </div>
+      </CardContent>
 
-      <div className="flex justify-between">
+      <CardFooter className="justify-between">
         <Link
           href="/step/1"
           className="rounded-md border border-gray-200 bg-white px-4 py-2 text-sm text-gray-800 transition-colors hover:shadow-md"
@@ -81,7 +86,7 @@ export default function Step2() {
         >
           Next
         </Link>
-      </div>
+      </CardFooter>
     </>
   );
 }
