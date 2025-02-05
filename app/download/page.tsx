@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Copy, Files } from "lucide-react";
+import { Copy, FileDown } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -17,19 +17,24 @@ export default function Download() {
     setImageUrl(storedImage);
   }, []);
 
-  const toDataURL = async (url: string) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-
-    return URL.createObjectURL(blob);
-  };
-
   const downloadFile = async (url: string) => {
-    const a = document.createElement("a");
-    a.href = await toDataURL(url);
-    a.download = "dev-stack.png";
+    try {
+      const response = await fetch(url);
 
-    a.click();
+      if (!response.ok) {
+        throw new Error("Failed to download image");
+      }
+
+      const blob = await response.blob();
+
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "dev-stack.png";
+
+      a.click();
+    } catch (_error) {
+      alert("이미지 다운로드에 실패했습니다.");
+    }
   };
 
   return (
@@ -40,17 +45,28 @@ export default function Download() {
         <Button
           size="lg"
           onClick={() => {
-            if (!imageUrl) return;
+            if (!imageUrl) {
+              alert("이미지가 없습니다.");
+              return;
+            }
+
             downloadFile(imageUrl);
           }}
         >
-          <Files />
+          <FileDown />
           이미지 파일 다운로드
         </Button>
 
         <Button
           size="lg"
-          onClick={() => navigator.clipboard.writeText(imageUrl)}
+          onClick={() => {
+            if (!imageUrl) {
+              alert("이미지가 없습니다.");
+              return;
+            }
+
+            navigator.clipboard.writeText(imageUrl);
+          }}
         >
           <Copy />
           이미지 링크 복사
