@@ -1,11 +1,12 @@
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import type { IconBoxStyleType } from "@/types/style";
+import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 
 interface PreviewProps {
   ref?: React.Ref<HTMLDivElement | null>;
   title?: string;
-  iconBoxStyle: IconBoxStyleType;
+  iconBoxStyle?: IconBoxStyleType;
   techs: string[];
   theme?: "light" | "dark";
 }
@@ -13,7 +14,7 @@ interface PreviewProps {
 export default function Preview({
   ref,
   title = "",
-  iconBoxStyle,
+  iconBoxStyle = INIT_ICON_BOX_STYLE,
   techs,
   theme = "light",
 }: PreviewProps) {

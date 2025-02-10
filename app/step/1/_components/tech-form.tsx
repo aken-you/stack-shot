@@ -11,24 +11,30 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import { COOKIE_MAX_AGE } from "@/constants/step";
 import { cn } from "@/lib/utils";
+import type { IconBoxStyleType, Theme } from "@/types/style";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function Step1Page({ techs }: { techs: string[] }) {
+export default function TechForm({
+  techs,
+  initSelectedTechs,
+  selectedTheme,
+  selectedIconBoxStyle,
+  title,
+}: {
+  techs: string[];
+  initSelectedTechs: string[];
+  selectedTheme?: Theme;
+  selectedIconBoxStyle?: IconBoxStyleType;
+  title?: string;
+}) {
   const [keyword, setKeyword] = useState<string>("");
-  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
-
-  useEffect(() => {
-    const savedTechStack = sessionStorage.getItem("techStack");
-
-    if (savedTechStack) {
-      setSelectedTechs(JSON.parse(savedTechStack));
-    }
-  }, []);
+  const [selectedTechs, setSelectedTechs] =
+    useState<string[]>(initSelectedTechs);
 
   const filteredTech = techs.filter((tech) => tech.includes(keyword));
 
@@ -46,7 +52,12 @@ export default function Step1Page({ techs }: { techs: string[] }) {
 
   return (
     <>
-      <Preview iconBoxStyle={INIT_ICON_BOX_STYLE} techs={selectedTechs} />
+      <Preview
+        techs={selectedTechs}
+        theme={selectedTheme}
+        iconBoxStyle={selectedIconBoxStyle}
+        title={title}
+      />
 
       <CardContent>
         <div className="mb-4 flex flex-wrap gap-2">
@@ -107,7 +118,7 @@ export default function Step1Page({ techs }: { techs: string[] }) {
           href="/step/2"
           className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
-            sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
+            document.cookie = `techStack=${JSON.stringify(selectedTechs)}; max-age=${COOKIE_MAX_AGE}; path=/`;
           }}
         >
           Next
