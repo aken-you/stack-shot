@@ -11,6 +11,10 @@ export default async function Page() {
   const selectedIconBoxStyle = cookieStore.get("iconBoxStyle");
   const title = cookieStore.get("title");
 
+  if (!selectedTechs || JSON.parse(selectedTechs.value).length === 0) {
+    throw new Error("select techs");
+  }
+
   return (
     <>
       <CardHeader>
