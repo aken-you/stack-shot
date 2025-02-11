@@ -16,10 +16,12 @@ export default function StyleForm({
   initIconBoxStyle = INIT_ICON_BOX_STYLE,
   selectedTechs,
   selectedTheme,
+  title,
 }: {
   initIconBoxStyle?: IconBoxStyleType;
   selectedTechs: string[];
   selectedTheme: Theme;
+  title?: string;
 }) {
   const [iconBoxStyle, setIconBoxStyle] =
     useState<IconBoxStyleType>(initIconBoxStyle);
@@ -32,12 +34,19 @@ export default function StyleForm({
     }));
   };
 
+  const storeIconBoxStyle = (iconBoxStyle: IconBoxStyleType) => {
+    document.cookie = `iconBoxStyle=${JSON.stringify(
+      iconBoxStyle,
+    )}; max-age=${COOKIE_MAX_AGE}; path=/`;
+  };
+
   return (
     <>
       <Preview
         iconBoxStyle={iconBoxStyle}
         techs={selectedTechs}
         theme={selectedTheme}
+        title={title}
       />
       <CardContent className="grid gap-6">
         {/* background */}
@@ -121,6 +130,9 @@ export default function StyleForm({
         <Link
           href="/step/2"
           className={cn(buttonVariants({ variant: "outline" }))}
+          onClick={() => {
+            storeIconBoxStyle(iconBoxStyle);
+          }}
         >
           Back
         </Link>
@@ -128,9 +140,7 @@ export default function StyleForm({
           href="/step/4"
           className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
-            document.cookie = `iconBoxStyle=${JSON.stringify(
-              iconBoxStyle,
-            )}; max-age=${COOKIE_MAX_AGE}; path=/`;
+            storeIconBoxStyle(iconBoxStyle);
           }}
         >
           Next

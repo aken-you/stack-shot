@@ -9,6 +9,7 @@ export default async function Page() {
   const iconBoxStyle = cookieStore.get("iconBoxStyle");
   const selectedTechs = cookieStore.get("techStack");
   const storedTheme = cookieStore.get("theme");
+  const title = cookieStore.get("title");
 
   if (!selectedTechs || JSON.parse(selectedTechs.value).length === 0) {
     throw new Error("select techs");
@@ -29,6 +30,7 @@ export default async function Page() {
         }
         selectedTechs={selectedTechs ? JSON.parse(selectedTechs.value) : []}
         selectedTheme={storedTheme ? (storedTheme.value as Theme) : "light"}
+        title={title?.value}
       />
     </>
   );

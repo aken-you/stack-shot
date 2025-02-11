@@ -23,6 +23,10 @@ export default function ThemeForm({
 }) {
   const [theme, setTheme] = useState<Theme>(initSelectedTheme);
 
+  const storeTheme = (theme: Theme) => {
+    document.cookie = `theme=${theme}; max-age=${COOKIE_MAX_AGE}; path=/`;
+  };
+
   return (
     <>
       <Preview
@@ -58,6 +62,9 @@ export default function ThemeForm({
         <Link
           href="/step/1"
           className={cn(buttonVariants({ variant: "outline" }))}
+          onClick={() => {
+            storeTheme(theme);
+          }}
         >
           Back
         </Link>
@@ -65,7 +72,7 @@ export default function ThemeForm({
           href="/step/3"
           className={cn(buttonVariants({ variant: "default" }))}
           onClick={() => {
-            document.cookie = `theme=${theme}; max-age=${COOKIE_MAX_AGE}; path=/`;
+            storeTheme(theme);
           }}
         >
           Next

@@ -12,6 +12,7 @@ import Preview from "@/components/preview";
 import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
+import { COOKIE_MAX_AGE } from "@/constants/step";
 
 export default function TitleForm({
   initTitle = "",
@@ -29,6 +30,10 @@ export default function TitleForm({
 
   const previewRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const storeTitle = (title: string) => {
+    document.cookie = `title=${title}; max-age=${COOKIE_MAX_AGE}; path=/`;
+  };
 
   const resetCookie = () => {
     deleteCookie("techStack");
@@ -95,13 +100,16 @@ export default function TitleForm({
         <Link
           href="/step/3"
           className={cn(buttonVariants({ variant: "outline" }))}
+          onClick={() => {
+            storeTitle(title);
+          }}
         >
           Back
         </Link>
         <Button
           disabled={isUploading}
           onClick={() => {
-            sessionStorage.setItem("title", JSON.stringify(title));
+            storeTitle(title);
 
             handleDownloadPreview();
           }}
