@@ -12,7 +12,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { COOKIE_MAX_AGE } from "@/constants/step";
-import { cn } from "@/lib/utils";
+import { cn, deleteCookie } from "@/lib/utils";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
@@ -48,6 +48,10 @@ export default function TechForm({
 
   const handleRemove = (target: string) => {
     setSelectedTechs((prev) => prev.filter((tech) => tech !== target));
+
+    if (selectedTechs.length === 1) {
+      deleteCookie("techStack");
+    }
   };
 
   return (

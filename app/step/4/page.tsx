@@ -11,6 +11,10 @@ export default async function Step4() {
   const selectedTheme = cookieStore.get("theme");
   const selectedIconBoxStyle = cookieStore.get("iconBoxStyle");
 
+  if (!selectedTechs || JSON.parse(selectedTechs.value).length === 0) {
+    throw new Error("select techs");
+  }
+
   return (
     <>
       <CardHeader>

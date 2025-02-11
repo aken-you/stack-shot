@@ -4,11 +4,15 @@ import { cookies } from "next/headers";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 
-export default async function Step3() {
+export default async function Page() {
   const cookieStore = await cookies();
   const iconBoxStyle = cookieStore.get("iconBoxStyle");
   const selectedTechs = cookieStore.get("techStack");
   const storedTheme = cookieStore.get("theme");
+
+  if (!selectedTechs || JSON.parse(selectedTechs.value).length === 0) {
+    throw new Error("select techs");
+  }
 
   return (
     <>
