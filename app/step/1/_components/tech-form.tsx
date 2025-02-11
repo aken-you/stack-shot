@@ -115,8 +115,12 @@ export default function TechForm({
 
       <CardFooter className="justify-end">
         <Link
-          href="/step/2"
-          className={cn(buttonVariants({ variant: "default" }))}
+          href={selectedTechs.length > 0 ? "/step/2" : ""}
+          className={cn(
+            buttonVariants({ variant: "default" }),
+            selectedTechs.length > 0 ? "" : "pointer-events-none opacity-50",
+          )}
+          tabIndex={selectedTechs.length > 0 ? 0 : -1}
           onClick={() => {
             document.cookie = `techStack=${JSON.stringify(selectedTechs)}; max-age=${COOKIE_MAX_AGE}; path=/`;
           }}
