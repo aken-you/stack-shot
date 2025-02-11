@@ -13,3 +13,5 @@ export const INIT_ICON_BOX_STYLE = {
   borderColor: "#E2E2E2",
   boxShadow: "transparent",
 };
+
+export const COOKIE_MAX_AGE = 6 * 60 * 60; // 6시간

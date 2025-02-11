@@ -4,3 +4,5 @@ export type IconBoxStyleType = {
   borderColor: string;
   boxShadow: string;
 };
+
+export type Theme = "light" | "dark";
