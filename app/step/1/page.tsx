@@ -4,8 +4,6 @@ import { cookies } from "next/headers";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 
-export const dynamic = "force-dynamic";
-
 export default async function Page() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/icons`);
   const techs = await data.json();
