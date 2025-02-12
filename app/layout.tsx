@@ -4,6 +4,7 @@ import logoImg from "./icon.svg";
 import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const notoSans = Noto_Sans_KR({
   variable: "--font-noto-sans",
@@ -44,6 +45,9 @@ export default function RootLayout({
 
         <main>{children}</main>
       </body>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      )}
     </html>
   );
 }
