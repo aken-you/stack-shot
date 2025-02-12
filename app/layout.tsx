@@ -11,8 +11,8 @@ const notoSans = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "dev-stack-view",
-  description: "create a image of your dev stack",
+  title: "stack-shot",
+  description: "create a image of your tech stack",
 };
 
 export default function RootLayout({
@@ -31,12 +31,12 @@ export default function RootLayout({
             <Link href="/" className="flex items-center gap-1">
               <Image
                 src={logoImg}
-                alt="dev-stack-view-logo"
+                alt="stack-shot-logo"
                 width="36"
                 height="36"
               />
               <span className="text-base font-extrabold text-gray-700">
-                dev-stack-view
+                stack-shot
               </span>
             </Link>
           </div>
