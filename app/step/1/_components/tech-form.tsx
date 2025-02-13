@@ -36,7 +36,9 @@ export default function TechForm({
   const [selectedTechs, setSelectedTechs] =
     useState<string[]>(initSelectedTechs);
 
-  const filteredTech = techs.filter((tech) => tech.includes(keyword));
+  const filteredTech = techs.filter((tech) =>
+    tech.toLowerCase().includes(keyword.toLowerCase()),
+  );
 
   const handleSelect = (target: string) => {
     if (selectedTechs.includes(target)) {
