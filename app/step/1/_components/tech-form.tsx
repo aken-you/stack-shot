@@ -88,7 +88,7 @@ export default function TechForm({
         <Command
           className="rounded-lg border shadow-md"
           filter={(value, search) => {
-            if (value.toLowerCase().includes(search)) return 1;
+            if (value.toLowerCase().includes(search.toLowerCase())) return 1;
             return 0;
           }}
         >
