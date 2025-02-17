@@ -27,7 +27,7 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-title" content="MyWebSite" />
       </head>
-      <body className={`${notoSans.variable} min-h-screen antialiased`}>
+      <body className={`${notoSans.className} min-h-screen antialiased`}>
         <header className="bg-background/90 sticky top-0 z-50 flex w-full items-center justify-center border-b px-4 backdrop-blur">
           <div className="container flex h-14 items-center justify-between">
             <Link href="/" className="flex items-center gap-1">
