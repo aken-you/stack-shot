@@ -32,23 +32,18 @@ export default function TechForm({
   selectedIconBoxStyle?: IconBoxStyleType;
   title?: string;
 }) {
-  const [keyword, setKeyword] = useState<string>("");
   const [selectedTechs, setSelectedTechs] =
     useState<string[]>(initSelectedTechs);
 
-  const filteredTech = techs.filter((tech) =>
-    tech.toLowerCase().includes(keyword.toLowerCase()),
-  );
-
   const handleSelect = (target: string) => {
     if (selectedTechs.includes(target)) {
-      handleRemove(target);
+      handleUnselect(target);
     } else {
       setSelectedTechs((prev) => [...prev, target]);
     }
   };
 
-  const handleRemove = (target: string) => {
+  const handleUnselect = (target: string) => {
     setSelectedTechs((prev) => prev.filter((tech) => tech !== target));
 
     if (selectedTechs.length === 1) {
@@ -82,7 +77,7 @@ export default function TechForm({
                 variant="ghost"
                 size="sm"
                 className="text-muted-foreground ml-2 h-auto p-0 hover:text-foreground"
-                onClick={() => handleRemove(tech)}
+                onClick={() => handleUnselect(tech)}
               >
                 <X className="h-3 w-3" />
               </Button>
@@ -90,15 +85,17 @@ export default function TechForm({
           ))}
         </div>
 
-        <Command className="rounded-lg border shadow-md">
-          <CommandInput
-            placeholder="Search tech stack..."
-            value={keyword}
-            onValueChange={setKeyword}
-          />
+        <Command
+          className="rounded-lg border shadow-md"
+          filter={(value, search) => {
+            if (value.toLowerCase().includes(search.toLowerCase())) return 1;
+            return 0;
+          }}
+        >
+          <CommandInput placeholder="Search tech stack..." />
           <CommandList>
             <CommandGroup>
-              {filteredTech.map((tech) => (
+              {techs.map((tech) => (
                 <CommandItem key={tech} onSelect={() => handleSelect(tech)}>
                   <Check
                     className={`mr-2 h-4 w-4 ${selectedTechs.includes(tech) ? "opacity-100" : "opacity-0"}`}
