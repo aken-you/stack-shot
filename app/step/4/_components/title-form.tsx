@@ -13,6 +13,7 @@ import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
 import { COOKIE_MAX_AGE } from "@/constants/step";
+import { sendGAEvent } from "@next/third-parties/google";
 
 export default function TitleForm({
   initTitle = "",
@@ -69,6 +70,9 @@ export default function TitleForm({
       resetCookie();
 
       sessionStorage.setItem("imageUrl", imageUrl);
+      sendGAEvent("event", "buttonClicked", {
+        event_category: "기술_스택_이미지_생성",
+      });
 
       router.push("/download");
     } catch (_error) {

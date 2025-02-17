@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { sendGAEvent } from "@next/third-parties/google";
 import { Copy, CopyCheck, FileCheck, FileDown } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -70,6 +71,9 @@ function DownloadButton({ imageUrl }: { imageUrl: string }) {
       a.click();
 
       setDownloadState("done");
+      sendGAEvent("event", "buttonClicked", {
+        event_category: "이미지_다운로드",
+      });
 
       setTimeout(() => {
         setDownloadState("idle");
@@ -118,6 +122,9 @@ function CopyButton({ imageUrl }: { imageUrl: string }) {
     navigator.clipboard.writeText(imageUrl);
 
     setCopyState("copied");
+    sendGAEvent("event", "buttonClicked", {
+      event_category: "이미지_링크_복사",
+    });
 
     setTimeout(() => {
       setCopyState("idle");
