@@ -5,6 +5,7 @@ import "./globals.css";
 import Image from "next/image";
 import Link from "next/link";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import GithubLogo from "../public/stack/GitHub.svg";
 
 const notoSans = Noto_Sans_KR({
   variable: "--font-noto-sans",
@@ -27,7 +28,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="MyWebSite" />
       </head>
       <body className={`${notoSans.variable} min-h-screen antialiased`}>
-        <header className="bg-background/90 sticky top-0 z-50 flex w-full justify-center border-b px-4 backdrop-blur">
+        <header className="bg-background/90 sticky top-0 z-50 flex w-full items-center justify-center border-b px-4 backdrop-blur">
           <div className="container flex h-14 items-center justify-between">
             <Link href="/" className="flex items-center gap-1">
               <Image
@@ -41,6 +42,10 @@ export default function RootLayout({
               </span>
             </Link>
           </div>
+
+          <Link href="https://github.com/aken-you/stack-shot" className="h-fit">
+            <Image src={GithubLogo} alt="github-link" width="32" height="32" />
+          </Link>
         </header>
 
         <main>{children}</main>
