@@ -66,7 +66,7 @@ function DownloadButton({ imageUrl }: { imageUrl: string }) {
 
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "dev-stack.png";
+      a.download = "stack-shot.png";
 
       a.click();
 
