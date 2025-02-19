@@ -29,7 +29,8 @@ export async function POST(request: Request) {
   }
 
   const data = await response.json();
-  return new Response(JSON.stringify({ imageUrl: data.url }), {
+
+  return new Response(JSON.stringify({ imageUrl: data.secure_url }), {
     status: 200,
   });
 }
