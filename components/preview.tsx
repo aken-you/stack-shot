@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import Image from "next/image";
 import type { IconBoxStyleType } from "@/types/style";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import { getTechName } from "@/lib/utils";
 
 interface PreviewProps {
   ref?: React.Ref<HTMLDivElement | null>;
@@ -72,10 +73,10 @@ function TechItem({
           boxShadow: `0 0 10px ${iconBoxStyle.boxShadow}`,
         }}
       >
-        <Image src={`../stack/${name}.svg`} width="48" height="48" alt={name} />
+        <Image src={`../stack/${name}`} width="48" height="48" alt={name} />
       </div>
       <div className="text-center font-semibold leading-[1.2]">
-        {name.replace(/-/g, " ")}
+        {getTechName(name)}
       </div>
     </div>
   );

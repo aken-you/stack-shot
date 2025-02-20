@@ -12,7 +12,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { COOKIE_MAX_AGE } from "@/constants/step";
-import { cn, deleteCookie } from "@/lib/utils";
+import { cn, deleteCookie, getTechName } from "@/lib/utils";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
@@ -67,11 +67,11 @@ export default function TechForm({
               <div className="flex items-center gap-2">
                 <Image
                   alt={tech}
-                  src={`../stack/${tech}.svg`}
+                  src={`../stack/${tech}`}
                   width={24}
                   height={24}
                 />
-                <span>{tech.replace(/-/g, " ")}</span>
+                <span>{getTechName(tech)}</span>
               </div>
               <Button
                 variant="ghost"
@@ -103,7 +103,7 @@ export default function TechForm({
                   <div className="flex items-center gap-2">
                     <Image
                       alt={tech}
-                      src={`../stack/${tech}.svg`}
+                      src={`../stack/${tech}`}
                       width={24}
                       height={24}
                     />
