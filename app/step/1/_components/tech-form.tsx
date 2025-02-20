@@ -107,7 +107,7 @@ export default function TechForm({
                       width={24}
                       height={24}
                     />
-                    <span>{tech.replace(/-/g, " ")}</span>
+                    <span>{getTechName(tech)}</span>
                   </div>
                 </CommandItem>
               ))}
