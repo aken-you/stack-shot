@@ -2,7 +2,7 @@
 
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { useRef, useState } from "react";
-import { cn, deleteCookie } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
@@ -12,21 +12,27 @@ import Preview from "@/components/preview";
 import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
-import { COOKIE_MAX_AGE } from "@/constants/step";
 import { sendGAEvent } from "@next/third-parties/google";
+import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import { uploadTechStackImage } from "@/app/actions";
 
-export default function TitleForm({
-  initTitle = "",
-  selectedTechs,
-  selectedTheme,
-  selectedIconBoxStyle,
-}: {
-  initTitle?: string;
-  selectedTechs: string[];
-  selectedTheme: Theme;
-  selectedIconBoxStyle: IconBoxStyleType;
-}) {
+export default function TitleForm() {
+  const session = {
+    techStack: sessionStorage.getItem("techStack"),
+    theme: sessionStorage.getItem("theme"),
+    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
+    title: sessionStorage.getItem("title"),
+  };
+
+  const selectedTechs = session.techStack
+    ? (JSON.parse(session.techStack) as string[])
+    : [];
+  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
+  const selectedIconBoxStyle = session.iconBoxStyle
+    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
+    : INIT_ICON_BOX_STYLE;
+  const initTitle = session.title || "";
+
   const [title, setTitle] = useState<string>(initTitle);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
@@ -34,14 +40,14 @@ export default function TitleForm({
   const router = useRouter();
 
   const storeTitle = (title: string) => {
-    document.cookie = `title=${title}; max-age=${COOKIE_MAX_AGE}; path=/`;
+    sessionStorage.setItem("title", title);
   };
 
-  const resetCookie = () => {
-    deleteCookie("techStack");
-    deleteCookie("theme");
-    deleteCookie("iconBoxStyle");
-    deleteCookie("title");
+  const resetSession = () => {
+    sessionStorage.removeItem("techStack");
+    sessionStorage.removeItem("theme");
+    sessionStorage.removeItem("iconBoxStyle");
+    sessionStorage.removeItem("title");
   };
 
   const handleDownloadPreview = async () => {
@@ -65,7 +71,7 @@ export default function TitleForm({
         throw new Error(response.error);
       }
 
-      resetCookie();
+      resetSession();
 
       const { imageUrl } = response;
 

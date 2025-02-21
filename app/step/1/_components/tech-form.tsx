@@ -11,29 +11,31 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { COOKIE_MAX_AGE } from "@/constants/step";
-import { cn, deleteCookie, getTechName } from "@/lib/utils";
+import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import { cn, getTechName } from "@/lib/utils";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TechForm({
-  techs,
-  initSelectedTechs,
-  selectedTheme,
-  selectedIconBoxStyle,
-  title,
-}: {
-  techs: string[];
-  initSelectedTechs: string[];
-  selectedTheme?: Theme;
-  selectedIconBoxStyle?: IconBoxStyleType;
-  title?: string;
-}) {
-  const [selectedTechs, setSelectedTechs] =
-    useState<string[]>(initSelectedTechs);
+export default function TechForm({ techs }: { techs: string[] }) {
+  const session = {
+    techStack: sessionStorage.getItem("techStack"),
+    theme: sessionStorage.getItem("theme"),
+    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
+    title: sessionStorage.getItem("title"),
+  };
+
+  const [selectedTechs, setSelectedTechs] = useState<string[]>(() => {
+    return session.techStack ? (JSON.parse(session.techStack) as string[]) : [];
+  });
+
+  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
+  const selectedIconBoxStyle = session.iconBoxStyle
+    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
+    : INIT_ICON_BOX_STYLE;
+  const title = session.title || "";
 
   const handleSelect = (target: string) => {
     if (selectedTechs.includes(target)) {
@@ -47,7 +49,7 @@ export default function TechForm({
     setSelectedTechs((prev) => prev.filter((tech) => tech !== target));
 
     if (selectedTechs.length === 1) {
-      deleteCookie("techStack");
+      sessionStorage.removeItem("techStack");
     }
   };
 
@@ -125,7 +127,7 @@ export default function TechForm({
           )}
           tabIndex={selectedTechs.length > 0 ? 0 : -1}
           onClick={() => {
-            document.cookie = `techStack=${JSON.stringify(selectedTechs)}; max-age=${COOKIE_MAX_AGE}; path=/`;
+            sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
           }}
         >
           Next

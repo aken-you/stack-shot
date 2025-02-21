@@ -9,22 +9,28 @@ import Link from "next/link";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { COOKIE_MAX_AGE, INIT_ICON_BOX_STYLE } from "@/constants/step";
+import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import type { IconBoxStyleType, Theme } from "@/types/style";
 
-export default function StyleForm({
-  initIconBoxStyle = INIT_ICON_BOX_STYLE,
-  selectedTechs,
-  selectedTheme,
-  title,
-}: {
-  initIconBoxStyle?: IconBoxStyleType;
-  selectedTechs: string[];
-  selectedTheme: Theme;
-  title?: string;
-}) {
+export default function StyleForm() {
+  const session = {
+    techStack: sessionStorage.getItem("techStack"),
+    theme: sessionStorage.getItem("theme"),
+    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
+    title: sessionStorage.getItem("title"),
+  };
+
+  const selectedTechs = session.techStack
+    ? (JSON.parse(session.techStack) as string[])
+    : [];
+  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
+  const selectedIconBoxStyle = session.iconBoxStyle
+    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
+    : INIT_ICON_BOX_STYLE;
+  const title = session.title || "";
+
   const [iconBoxStyle, setIconBoxStyle] =
-    useState<IconBoxStyleType>(initIconBoxStyle);
+    useState<IconBoxStyleType>(selectedIconBoxStyle);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,9 +41,7 @@ export default function StyleForm({
   };
 
   const storeIconBoxStyle = (iconBoxStyle: IconBoxStyleType) => {
-    document.cookie = `iconBoxStyle=${JSON.stringify(
-      iconBoxStyle,
-    )}; max-age=${COOKIE_MAX_AGE}; path=/`;
+    sessionStorage.setItem("iconBoxStyle", JSON.stringify(iconBoxStyle));
   };
 
   return (
