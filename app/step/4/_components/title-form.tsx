@@ -14,6 +14,7 @@ import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
 import { COOKIE_MAX_AGE } from "@/constants/step";
 import { sendGAEvent } from "@next/third-parties/google";
+import { uploadTechStackImage } from "@/app/actions";
 
 export default function TitleForm({
   initTitle = "",
@@ -49,25 +50,24 @@ export default function TitleForm({
     try {
       setIsUploading(true);
 
-      const imageData = await htmlToImage.toBlob(previewRef.current);
+      const previewImageBlob = await htmlToImage.toBlob(previewRef.current);
 
-      if (!imageData) return;
-
-      const formData = new FormData();
-      formData.append("file", imageData);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to upload image");
+      if (!previewImageBlob) {
+        throw new Error("failed to create image blob");
       }
 
-      const { imageUrl } = await response.json();
+      const formData = new FormData();
+      formData.append("file", previewImageBlob);
+
+      const response = await uploadTechStackImage(formData);
+
+      if ("error" in response) {
+        throw new Error(response.error);
+      }
 
       resetCookie();
+
+      const { imageUrl } = response;
 
       sessionStorage.setItem("imageUrl", imageUrl);
       sendGAEvent("event", "buttonClicked", {
@@ -75,8 +75,11 @@ export default function TitleForm({
       });
 
       router.push("/download");
-    } catch (_error) {
-      alert("이미지 생성에 실패했습니다. 다시 시도해주세요.");
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+      console.error(error);
       setIsUploading(false);
     }
   };
