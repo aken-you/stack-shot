@@ -2,36 +2,33 @@
 
 import Preview from "@/components/preview";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { COOKIE_MAX_AGE } from "@/constants/step";
 import Link from "next/link";
 import { Moon, Sun } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import type { IconBoxStyleType, Theme } from "@/types/style";
+import type { Theme } from "@/types/style";
+import useSessionFormData from "@/hooks/useSessionFormData";
 
-export default function ThemeForm({
-  initSelectedTheme = "light",
-  selectedTechs,
-  selectedIconBoxStyle,
-  title,
-}: {
-  initSelectedTheme?: Theme;
-  selectedTechs: string[];
-  selectedIconBoxStyle?: IconBoxStyleType;
-  title?: string;
-}) {
-  const [theme, setTheme] = useState<Theme>(initSelectedTheme);
+export default function ThemeForm() {
+  const {
+    techStack,
+    theme: initTheme,
+    iconBoxStyle,
+    title,
+  } = useSessionFormData();
+
+  const [theme, setTheme] = useState<Theme>(() => initTheme);
 
   const storeTheme = (theme: Theme) => {
-    document.cookie = `theme=${theme}; max-age=${COOKIE_MAX_AGE}; path=/`;
+    sessionStorage.setItem("theme", theme);
   };
 
   return (
     <>
       <Preview
-        iconBoxStyle={selectedIconBoxStyle}
-        techs={selectedTechs}
+        iconBoxStyle={iconBoxStyle}
+        techs={techStack}
         theme={theme}
         title={title}
       />

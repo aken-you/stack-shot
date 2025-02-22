@@ -11,29 +11,24 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { COOKIE_MAX_AGE } from "@/constants/step";
-import { cn, deleteCookie, getTechName } from "@/lib/utils";
-import type { IconBoxStyleType, Theme } from "@/types/style";
+import { cn, getTechName } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import useSessionFormData from "@/hooks/useSessionFormData";
 
-export default function TechForm({
-  techs,
-  initSelectedTechs,
-  selectedTheme,
-  selectedIconBoxStyle,
-  title,
-}: {
-  techs: string[];
-  initSelectedTechs: string[];
-  selectedTheme?: Theme;
-  selectedIconBoxStyle?: IconBoxStyleType;
-  title?: string;
-}) {
-  const [selectedTechs, setSelectedTechs] =
-    useState<string[]>(initSelectedTechs);
+export default function TechForm({ techs }: { techs: string[] }) {
+  const {
+    techStack: initSelectedTechs,
+    theme,
+    iconBoxStyle,
+    title,
+  } = useSessionFormData();
+
+  const [selectedTechs, setSelectedTechs] = useState<string[]>(
+    () => initSelectedTechs,
+  );
 
   const handleSelect = (target: string) => {
     if (selectedTechs.includes(target)) {
@@ -47,7 +42,7 @@ export default function TechForm({
     setSelectedTechs((prev) => prev.filter((tech) => tech !== target));
 
     if (selectedTechs.length === 1) {
-      deleteCookie("techStack");
+      sessionStorage.removeItem("techStack");
     }
   };
 
@@ -55,8 +50,8 @@ export default function TechForm({
     <>
       <Preview
         techs={selectedTechs}
-        theme={selectedTheme}
-        iconBoxStyle={selectedIconBoxStyle}
+        theme={theme}
+        iconBoxStyle={iconBoxStyle}
         title={title}
       />
 
@@ -125,7 +120,7 @@ export default function TechForm({
           )}
           tabIndex={selectedTechs.length > 0 ? 0 : -1}
           onClick={() => {
-            document.cookie = `techStack=${JSON.stringify(selectedTechs)}; max-age=${COOKIE_MAX_AGE}; path=/`;
+            sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
           }}
         >
           Next

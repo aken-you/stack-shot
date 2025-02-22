@@ -9,22 +9,20 @@ import Link from "next/link";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { COOKIE_MAX_AGE, INIT_ICON_BOX_STYLE } from "@/constants/step";
-import type { IconBoxStyleType, Theme } from "@/types/style";
+import type { IconBoxStyleType } from "@/types/style";
+import useSessionFormData from "@/hooks/useSessionFormData";
 
-export default function StyleForm({
-  initIconBoxStyle = INIT_ICON_BOX_STYLE,
-  selectedTechs,
-  selectedTheme,
-  title,
-}: {
-  initIconBoxStyle?: IconBoxStyleType;
-  selectedTechs: string[];
-  selectedTheme: Theme;
-  title?: string;
-}) {
-  const [iconBoxStyle, setIconBoxStyle] =
-    useState<IconBoxStyleType>(initIconBoxStyle);
+export default function StyleForm() {
+  const {
+    techStack,
+    theme,
+    title,
+    iconBoxStyle: initIconBoxStyle,
+  } = useSessionFormData();
+
+  const [iconBoxStyle, setIconBoxStyle] = useState<IconBoxStyleType>(
+    () => initIconBoxStyle,
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,17 +33,15 @@ export default function StyleForm({
   };
 
   const storeIconBoxStyle = (iconBoxStyle: IconBoxStyleType) => {
-    document.cookie = `iconBoxStyle=${JSON.stringify(
-      iconBoxStyle,
-    )}; max-age=${COOKIE_MAX_AGE}; path=/`;
+    sessionStorage.setItem("iconBoxStyle", JSON.stringify(iconBoxStyle));
   };
 
   return (
     <>
       <Preview
         iconBoxStyle={iconBoxStyle}
-        techs={selectedTechs}
-        theme={selectedTheme}
+        techs={techStack}
+        theme={theme}
         title={title}
       />
       <CardContent className="grid gap-6">
@@ -63,7 +59,7 @@ export default function StyleForm({
                   ...prev,
                   backgroundColor: checked
                     ? "transparent"
-                    : INIT_ICON_BOX_STYLE.backgroundColor,
+                    : initIconBoxStyle.backgroundColor,
                 }));
               }}
               label="Background Color"
@@ -106,7 +102,7 @@ export default function StyleForm({
                   ...prev,
                   borderColor: checked
                     ? "transparent"
-                    : INIT_ICON_BOX_STYLE.borderColor,
+                    : initIconBoxStyle.borderColor,
                 }));
               }}
             />

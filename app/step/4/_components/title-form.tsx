@@ -1,8 +1,7 @@
 "use client";
 
-import type { IconBoxStyleType, Theme } from "@/types/style";
 import { useRef, useState } from "react";
-import { cn, deleteCookie } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
@@ -12,36 +11,33 @@ import Preview from "@/components/preview";
 import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
-import { COOKIE_MAX_AGE } from "@/constants/step";
 import { sendGAEvent } from "@next/third-parties/google";
+import useSessionFormData from "@/hooks/useSessionFormData";
 import { uploadTechStackImage } from "@/app/actions";
 
-export default function TitleForm({
-  initTitle = "",
-  selectedTechs,
-  selectedTheme,
-  selectedIconBoxStyle,
-}: {
-  initTitle?: string;
-  selectedTechs: string[];
-  selectedTheme: Theme;
-  selectedIconBoxStyle: IconBoxStyleType;
-}) {
-  const [title, setTitle] = useState<string>(initTitle);
+export default function TitleForm() {
+  const {
+    techStack,
+    theme,
+    iconBoxStyle,
+    title: initTitle,
+  } = useSessionFormData();
+
+  const [title, setTitle] = useState<string>(() => initTitle);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const storeTitle = (title: string) => {
-    document.cookie = `title=${title}; max-age=${COOKIE_MAX_AGE}; path=/`;
+    sessionStorage.setItem("title", title);
   };
 
-  const resetCookie = () => {
-    deleteCookie("techStack");
-    deleteCookie("theme");
-    deleteCookie("iconBoxStyle");
-    deleteCookie("title");
+  const resetSession = () => {
+    sessionStorage.removeItem("techStack");
+    sessionStorage.removeItem("theme");
+    sessionStorage.removeItem("iconBoxStyle");
+    sessionStorage.removeItem("title");
   };
 
   const handleDownloadPreview = async () => {
@@ -65,7 +61,7 @@ export default function TitleForm({
         throw new Error(response.error);
       }
 
-      resetCookie();
+      resetSession();
 
       const { imageUrl } = response;
 
@@ -89,9 +85,9 @@ export default function TitleForm({
       <Preview
         ref={previewRef}
         title={title}
-        iconBoxStyle={selectedIconBoxStyle}
-        techs={selectedTechs}
-        theme={selectedTheme}
+        iconBoxStyle={iconBoxStyle}
+        techs={techStack}
+        theme={theme}
       />
 
       <CardContent className="space-y-2">
