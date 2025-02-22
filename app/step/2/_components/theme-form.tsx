@@ -7,27 +7,18 @@ import { Moon, Sun } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import type { IconBoxStyleType, Theme } from "@/types/style";
-import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import type { Theme } from "@/types/style";
+import useSessionFormData from "@/hooks/useSessionFormData";
 
 export default function ThemeForm() {
-  const session = {
-    techStack: sessionStorage.getItem("techStack"),
-    theme: sessionStorage.getItem("theme"),
-    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
-    title: sessionStorage.getItem("title"),
-  };
+  const {
+    techStack,
+    theme: initTheme,
+    iconBoxStyle,
+    title,
+  } = useSessionFormData();
 
-  const selectedTechs = session.techStack
-    ? (JSON.parse(session.techStack) as string[])
-    : [];
-  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
-  const selectedIconBoxStyle = session.iconBoxStyle
-    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
-    : INIT_ICON_BOX_STYLE;
-  const title = session.title || "";
-
-  const [theme, setTheme] = useState<Theme>(selectedTheme);
+  const [theme, setTheme] = useState<Theme>(() => initTheme);
 
   const storeTheme = (theme: Theme) => {
     sessionStorage.setItem("theme", theme);
@@ -36,8 +27,8 @@ export default function ThemeForm() {
   return (
     <>
       <Preview
-        iconBoxStyle={selectedIconBoxStyle}
-        techs={selectedTechs}
+        iconBoxStyle={iconBoxStyle}
+        techs={techStack}
         theme={theme}
         title={title}
       />

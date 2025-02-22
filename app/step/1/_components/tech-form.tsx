@@ -11,31 +11,24 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import { cn, getTechName } from "@/lib/utils";
-import type { IconBoxStyleType, Theme } from "@/types/style";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import useSessionFormData from "@/hooks/useSessionFormData";
 
 export default function TechForm({ techs }: { techs: string[] }) {
-  const session = {
-    techStack: sessionStorage.getItem("techStack"),
-    theme: sessionStorage.getItem("theme"),
-    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
-    title: sessionStorage.getItem("title"),
-  };
+  const {
+    techStack: initSelectedTechs,
+    theme,
+    iconBoxStyle,
+    title,
+  } = useSessionFormData();
 
-  const [selectedTechs, setSelectedTechs] = useState<string[]>(() => {
-    return session.techStack ? (JSON.parse(session.techStack) as string[]) : [];
-  });
-
-  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
-  const selectedIconBoxStyle = session.iconBoxStyle
-    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
-    : INIT_ICON_BOX_STYLE;
-  const title = session.title || "";
+  const [selectedTechs, setSelectedTechs] = useState<string[]>(
+    () => initSelectedTechs,
+  );
 
   const handleSelect = (target: string) => {
     if (selectedTechs.includes(target)) {
@@ -57,8 +50,8 @@ export default function TechForm({ techs }: { techs: string[] }) {
     <>
       <Preview
         techs={selectedTechs}
-        theme={selectedTheme}
-        iconBoxStyle={selectedIconBoxStyle}
+        theme={theme}
+        iconBoxStyle={iconBoxStyle}
         title={title}
       />
 

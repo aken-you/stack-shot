@@ -1,6 +1,5 @@
 "use client";
 
-import type { IconBoxStyleType, Theme } from "@/types/style";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -13,27 +12,18 @@ import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
 import { sendGAEvent } from "@next/third-parties/google";
-import { INIT_ICON_BOX_STYLE } from "@/constants/step";
+import useSessionFormData from "@/hooks/useSessionFormData";
 import { uploadTechStackImage } from "@/app/actions";
 
 export default function TitleForm() {
-  const session = {
-    techStack: sessionStorage.getItem("techStack"),
-    theme: sessionStorage.getItem("theme"),
-    iconBoxStyle: sessionStorage.getItem("iconBoxStyle"),
-    title: sessionStorage.getItem("title"),
-  };
+  const {
+    techStack,
+    theme,
+    iconBoxStyle,
+    title: initTitle,
+  } = useSessionFormData();
 
-  const selectedTechs = session.techStack
-    ? (JSON.parse(session.techStack) as string[])
-    : [];
-  const selectedTheme = session.theme ? (session.theme as Theme) : "light";
-  const selectedIconBoxStyle = session.iconBoxStyle
-    ? (JSON.parse(session.iconBoxStyle) as IconBoxStyleType)
-    : INIT_ICON_BOX_STYLE;
-  const initTitle = session.title || "";
-
-  const [title, setTitle] = useState<string>(initTitle);
+  const [title, setTitle] = useState<string>(() => initTitle);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -95,9 +85,9 @@ export default function TitleForm() {
       <Preview
         ref={previewRef}
         title={title}
-        iconBoxStyle={selectedIconBoxStyle}
-        techs={selectedTechs}
-        theme={selectedTheme}
+        iconBoxStyle={iconBoxStyle}
+        techs={techStack}
+        theme={theme}
       />
 
       <CardContent className="space-y-2">
