@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ColorInput } from "@/components/color-input";
@@ -10,19 +9,10 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import type { IconBoxStyleType } from "@/types/style";
-import useSessionFormData from "@/hooks/useSessionFormData";
+import useForm from "@/hooks/use-form";
 
 export default function StyleForm() {
-  const {
-    techStack,
-    theme,
-    title,
-    iconBoxStyle: initIconBoxStyle,
-  } = useSessionFormData();
-
-  const [iconBoxStyle, setIconBoxStyle] = useState<IconBoxStyleType>(
-    () => initIconBoxStyle,
-  );
+  const { techStack, theme, title, iconBoxStyle, setIconBoxStyle } = useForm();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,7 +49,7 @@ export default function StyleForm() {
                   ...prev,
                   backgroundColor: checked
                     ? "transparent"
-                    : initIconBoxStyle.backgroundColor,
+                    : iconBoxStyle.backgroundColor,
                 }));
               }}
               label="Background Color"
@@ -102,7 +92,7 @@ export default function StyleForm() {
                   ...prev,
                   borderColor: checked
                     ? "transparent"
-                    : initIconBoxStyle.borderColor,
+                    : iconBoxStyle.borderColor,
                 }));
               }}
             />

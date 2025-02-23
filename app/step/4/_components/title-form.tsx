@@ -12,18 +12,12 @@ import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
 import { sendGAEvent } from "@next/third-parties/google";
-import useSessionFormData from "@/hooks/useSessionFormData";
 import { uploadTechStackImage } from "@/app/actions";
+import useForm from "@/hooks/use-form";
 
 export default function TitleForm() {
-  const {
-    techStack,
-    theme,
-    iconBoxStyle,
-    title: initTitle,
-  } = useSessionFormData();
+  const { techStack, theme, iconBoxStyle, title, setTitle } = useForm();
 
-  const [title, setTitle] = useState<string>(() => initTitle);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const previewRef = useRef<HTMLDivElement>(null);

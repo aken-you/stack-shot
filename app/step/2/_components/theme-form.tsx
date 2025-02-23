@@ -6,19 +6,11 @@ import Link from "next/link";
 import { Moon, Sun } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import type { Theme } from "@/types/style";
-import useSessionFormData from "@/hooks/useSessionFormData";
+import useForm from "@/hooks/use-form";
 
 export default function ThemeForm() {
-  const {
-    techStack,
-    theme: initTheme,
-    iconBoxStyle,
-    title,
-  } = useSessionFormData();
-
-  const [theme, setTheme] = useState<Theme>(() => initTheme);
+  const { techStack, title, iconBoxStyle, theme, setTheme } = useForm();
 
   const storeTheme = (theme: Theme) => {
     sessionStorage.setItem("theme", theme);

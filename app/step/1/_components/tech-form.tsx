@@ -15,18 +15,10 @@ import { cn, getTechName } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import useSessionFormData from "@/hooks/useSessionFormData";
+import useForm from "@/hooks/use-form";
 
 export default function TechForm({ techs }: { techs: string[] }) {
-  const {
-    techStack: initTechStack,
-    theme,
-    iconBoxStyle,
-    title,
-  } = useSessionFormData();
-
-  const [techStack, setTechStack] = useState<string[]>(() => initTechStack);
+  const { techStack, setTechStack, theme, title, iconBoxStyle } = useForm();
 
   const handleSelect = (target: string) => {
     if (techStack.includes(target)) {
