@@ -18,7 +18,8 @@ import Link from "next/link";
 import useForm from "@/hooks/use-form";
 
 export default function TechForm({ techs }: { techs: string[] }) {
-  const { techStack, setTechStack, theme, title, iconBoxStyle } = useForm();
+  const { isInitialized, techStack, setTechStack, theme, title, iconBoxStyle } =
+    useForm();
 
   const handleSelect = (target: string) => {
     if (techStack.includes(target)) {
@@ -43,6 +44,7 @@ export default function TechForm({ techs }: { techs: string[] }) {
         theme={theme}
         iconBoxStyle={iconBoxStyle}
         title={title}
+        isLoading={isInitialized}
       />
 
       <CardContent>

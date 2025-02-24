@@ -16,7 +16,8 @@ import { uploadTechStackImage } from "@/app/actions";
 import useForm from "@/hooks/use-form";
 
 export default function TitleForm() {
-  const { techStack, theme, iconBoxStyle, title, setTitle } = useForm();
+  const { isInitialized, techStack, theme, iconBoxStyle, title, setTitle } =
+    useForm();
 
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
@@ -93,6 +94,7 @@ export default function TitleForm() {
         iconBoxStyle={iconBoxStyle}
         techs={techStack}
         theme={theme}
+        isLoading={isInitialized}
       />
 
       <CardContent className="space-y-2">

@@ -12,7 +12,14 @@ import type { IconBoxStyleType } from "@/types/style";
 import useForm from "@/hooks/use-form";
 
 export default function StyleForm() {
-  const { techStack, theme, title, iconBoxStyle, setIconBoxStyle } = useForm();
+  const {
+    isInitialized,
+    techStack,
+    theme,
+    title,
+    iconBoxStyle,
+    setIconBoxStyle,
+  } = useForm();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,6 +40,7 @@ export default function StyleForm() {
         techs={techStack}
         theme={theme}
         title={title}
+        isLoading={isInitialized}
       />
       <CardContent className="grid gap-6">
         {/* background */}
@@ -53,6 +61,7 @@ export default function StyleForm() {
                 }));
               }}
               label="Background Color"
+              disabled={isInitialized}
             />
           </div>
         </div>
@@ -64,7 +73,7 @@ export default function StyleForm() {
             <ColorInput
               id="shadowColor"
               name="shadowColor"
-              value={iconBoxStyle.boxShadow ?? ""}
+              value={iconBoxStyle.boxShadow}
               onChange={handleInputChange}
               label="Shadow Color"
               onCheckedChange={(checked) => {
@@ -73,6 +82,7 @@ export default function StyleForm() {
                   boxShadow: checked ? "transparent" : "#E2E8F0",
                 }));
               }}
+              disabled={isInitialized}
             />
           </div>
         </div>
@@ -95,6 +105,7 @@ export default function StyleForm() {
                     : iconBoxStyle.borderColor,
                 }));
               }}
+              disabled={isInitialized}
             />
 
             <div className="space-y-2">
@@ -103,10 +114,11 @@ export default function StyleForm() {
                 id="borderRadius"
                 name="borderRadius"
                 type="number"
-                value={Number.parseInt(iconBoxStyle.borderRadius)}
+                value={Number.parseInt(iconBoxStyle.borderRadius || "0")}
                 onChange={handleInputChange}
                 min="0"
                 max="50"
+                disabled={isInitialized}
               />
             </div>
           </div>

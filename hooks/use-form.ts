@@ -5,8 +5,12 @@ import { useEffect, useState } from "react";
 export default function useForm() {
   const [techStack, setTechStack] = useState<string[]>([]); // 1단계 입력
   const [theme, setTheme] = useState<Theme>("light"); // 2단계 선택
-  const [iconBoxStyle, setIconBoxStyle] =
-    useState<IconBoxStyleType>(INIT_ICON_BOX_STYLE); // 3단계 입력
+  const [iconBoxStyle, setIconBoxStyle] = useState<IconBoxStyleType>({
+    backgroundColor: "",
+    borderColor: "",
+    borderRadius: "",
+    boxShadow: "",
+  }); // 3단계 입력
   const [title, setTitle] = useState<string>(""); // 4단계 입력
 
   const [isInitialized, setIsInitialized] = useState<boolean>(true);
