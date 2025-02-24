@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { IconBoxStyleType } from "@/types/style";
 import { INIT_ICON_BOX_STYLE } from "@/constants/step";
 import { getTechName } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 
 interface PreviewProps {
   ref?: React.Ref<HTMLDivElement | null>;
@@ -10,6 +11,7 @@ interface PreviewProps {
   iconBoxStyle?: IconBoxStyleType;
   techs: string[];
   theme?: "light" | "dark";
+  isLoading?: boolean;
 }
 
 export default function Preview({
@@ -18,7 +20,18 @@ export default function Preview({
   iconBoxStyle = INIT_ICON_BOX_STYLE,
   techs,
   theme = "light",
+  isLoading = false,
 }: PreviewProps) {
+  if (isLoading) {
+    return (
+      <Card className="overflow-x-auto bg-slate-100 p-6">
+        <div className="flex min-h-[12.5rem] w-full items-center justify-center">
+          <Loader2 className="animate-spin" size={48} color="#2563eb" />
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className="overflow-x-auto bg-slate-100 p-6">
       <div

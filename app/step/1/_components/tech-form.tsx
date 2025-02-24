@@ -15,33 +15,24 @@ import { cn, getTechName } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import useSessionFormData from "@/hooks/useSessionFormData";
+import useForm from "@/hooks/use-form";
 
 export default function TechForm({ techs }: { techs: string[] }) {
-  const {
-    techStack: initSelectedTechs,
-    theme,
-    iconBoxStyle,
-    title,
-  } = useSessionFormData();
-
-  const [selectedTechs, setSelectedTechs] = useState<string[]>(
-    () => initSelectedTechs,
-  );
+  const { isInitialized, techStack, setTechStack, theme, title, iconBoxStyle } =
+    useForm();
 
   const handleSelect = (target: string) => {
-    if (selectedTechs.includes(target)) {
+    if (techStack.includes(target)) {
       handleUnselect(target);
     } else {
-      setSelectedTechs((prev) => [...prev, target]);
+      setTechStack((prev) => [...prev, target]);
     }
   };
 
   const handleUnselect = (target: string) => {
-    setSelectedTechs((prev) => prev.filter((tech) => tech !== target));
+    setTechStack((prev) => prev.filter((tech) => tech !== target));
 
-    if (selectedTechs.length === 1) {
+    if (techStack.length === 1) {
       sessionStorage.removeItem("techStack");
     }
   };
@@ -49,15 +40,16 @@ export default function TechForm({ techs }: { techs: string[] }) {
   return (
     <>
       <Preview
-        techs={selectedTechs}
+        techs={techStack}
         theme={theme}
         iconBoxStyle={iconBoxStyle}
         title={title}
+        isLoading={isInitialized}
       />
 
       <CardContent>
         <div className="mb-4 flex flex-wrap gap-2">
-          {selectedTechs.map((tech) => (
+          {techStack.map((tech) => (
             <Badge key={tech} variant="secondary" className="px-2 py-1 text-sm">
               <div className="flex items-center gap-2">
                 <Image
@@ -93,7 +85,7 @@ export default function TechForm({ techs }: { techs: string[] }) {
               {techs.map((tech) => (
                 <CommandItem key={tech} onSelect={() => handleSelect(tech)}>
                   <Check
-                    className={`mr-2 h-4 w-4 ${selectedTechs.includes(tech) ? "opacity-100" : "opacity-0"}`}
+                    className={`mr-2 h-4 w-4 ${techStack.includes(tech) ? "opacity-100" : "opacity-0"}`}
                   />
                   <div className="flex items-center gap-2">
                     <Image
@@ -113,14 +105,14 @@ export default function TechForm({ techs }: { techs: string[] }) {
 
       <CardFooter className="justify-end">
         <Link
-          href={selectedTechs.length > 0 ? "/step/2" : ""}
+          href={techStack.length > 0 ? "/step/2" : ""}
           className={cn(
             buttonVariants({ variant: "default" }),
-            selectedTechs.length > 0 ? "" : "pointer-events-none opacity-50",
+            techStack.length > 0 ? "" : "pointer-events-none opacity-50",
           )}
-          tabIndex={selectedTechs.length > 0 ? 0 : -1}
+          tabIndex={techStack.length > 0 ? 0 : -1}
           onClick={() => {
-            sessionStorage.setItem("techStack", JSON.stringify(selectedTechs));
+            sessionStorage.setItem("techStack", JSON.stringify(techStack));
           }}
         >
           Next

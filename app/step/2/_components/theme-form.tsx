@@ -6,19 +6,12 @@ import Link from "next/link";
 import { Moon, Sun } from "lucide-react";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import type { Theme } from "@/types/style";
-import useSessionFormData from "@/hooks/useSessionFormData";
+import useForm from "@/hooks/use-form";
 
 export default function ThemeForm() {
-  const {
-    techStack,
-    theme: initTheme,
-    iconBoxStyle,
-    title,
-  } = useSessionFormData();
-
-  const [theme, setTheme] = useState<Theme>(() => initTheme);
+  const { isInitialized, techStack, title, iconBoxStyle, theme, setTheme } =
+    useForm();
 
   const storeTheme = (theme: Theme) => {
     sessionStorage.setItem("theme", theme);
@@ -31,11 +24,12 @@ export default function ThemeForm() {
         techs={techStack}
         theme={theme}
         title={title}
+        isLoading={isInitialized}
       />
 
       <CardContent className="grid grid-cols-2 space-x-4">
         <Button
-          variant={theme === "light" ? "default" : "outline"}
+          variant={!isInitialized && theme === "light" ? "default" : "outline"}
           size="lg"
           onClick={() => setTheme("light")}
         >
@@ -43,11 +37,8 @@ export default function ThemeForm() {
           <span>light</span>
         </Button>
         <Button
-          variant={theme === "dark" ? "default" : "outline"}
+          variant={!isInitialized && theme === "dark" ? "default" : "outline"}
           size="lg"
-          className={
-            theme === "dark" ? "bg-blue-600 text-white transition-colors" : ""
-          }
           onClick={() => setTheme("dark")}
         >
           <Moon />

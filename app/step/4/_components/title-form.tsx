@@ -12,18 +12,13 @@ import Link from "next/link";
 import * as htmlToImage from "html-to-image";
 import { useRouter } from "next/navigation";
 import { sendGAEvent } from "@next/third-parties/google";
-import useSessionFormData from "@/hooks/useSessionFormData";
 import { uploadTechStackImage } from "@/app/actions";
+import useForm from "@/hooks/use-form";
 
 export default function TitleForm() {
-  const {
-    techStack,
-    theme,
-    iconBoxStyle,
-    title: initTitle,
-  } = useSessionFormData();
+  const { isInitialized, techStack, theme, iconBoxStyle, title, setTitle } =
+    useForm();
 
-  const [title, setTitle] = useState<string>(() => initTitle);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const previewRef = useRef<HTMLDivElement>(null);
@@ -46,7 +41,18 @@ export default function TitleForm() {
     try {
       setIsUploading(true);
 
-      const previewImageBlob = await htmlToImage.toBlob(previewRef.current);
+      const scale = 1000 / previewRef.current.offsetWidth;
+
+      const previewImageBlob = await htmlToImage.toBlob(previewRef.current, {
+        height: previewRef.current.offsetHeight * scale,
+        width: previewRef.current.offsetWidth * scale,
+        style: {
+          transform: "scale(" + scale + ")",
+          transformOrigin: "top left",
+          width: previewRef.current.offsetWidth + "px",
+          height: previewRef.current.offsetHeight + "px",
+        },
+      });
 
       if (!previewImageBlob) {
         throw new Error("failed to create image blob");
@@ -88,6 +94,7 @@ export default function TitleForm() {
         iconBoxStyle={iconBoxStyle}
         techs={techStack}
         theme={theme}
+        isLoading={isInitialized}
       />
 
       <CardContent className="space-y-2">
