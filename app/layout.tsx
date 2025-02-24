@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import GithubLogo from "../public/stack/GitHub.svg";
+import { Analytics } from "@vercel/analytics/react";
 
 const notoSans = Noto_Sans_KR({
   variable: "--font-noto-sans",
@@ -53,6 +54,7 @@ export default function RootLayout({
       {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
       )}
+      <Analytics />
     </html>
   );
 }
