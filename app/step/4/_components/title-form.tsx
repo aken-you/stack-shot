@@ -56,7 +56,7 @@ export default function TitleForm() {
       });
 
       if (!previewImageBlob) {
-        throw new Error("failed to create image blob");
+        throw new Error(ERROR_MESSAGE.FAILED_TO_CREATE_IMAGE_BLOB);
       }
 
       const formData = new FormData();
