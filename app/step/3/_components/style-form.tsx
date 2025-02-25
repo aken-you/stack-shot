@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import type { IconBoxStyleType } from "@/types/style";
 import useForm from "@/hooks/use-form";
+import { ERROR_MESSAGE } from "@/constants/error";
 
 export default function StyleForm() {
   const {
@@ -32,6 +33,10 @@ export default function StyleForm() {
   const storeIconBoxStyle = (iconBoxStyle: IconBoxStyleType) => {
     sessionStorage.setItem("iconBoxStyle", JSON.stringify(iconBoxStyle));
   };
+
+  if (!isInitialized && techStack.length === 0) {
+    throw new Error(ERROR_MESSAGE.TECH_STACK_IS_NECESSARY);
+  }
 
   return (
     <>

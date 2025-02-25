@@ -1,5 +1,6 @@
 "use server";
 
+import { ERROR_MESSAGE } from "@/constants/error";
 import { ServerActionError } from "@/lib/error";
 
 export async function uploadTechStackImage(
@@ -9,7 +10,7 @@ export async function uploadTechStackImage(
 
   if (!imageFile) {
     return {
-      error: "no tech stack image",
+      error: ERROR_MESSAGE.NO_TECH_STACK_IMAGE,
     };
   }
 
@@ -29,7 +30,7 @@ export async function uploadTechStackImage(
 
   if (!response.ok) {
     return {
-      error: "failed to upload image",
+      error: ERROR_MESSAGE.FAILED_TO_UPLOAD_IMAGE,
     };
   }
 

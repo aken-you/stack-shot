@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { sendGAEvent } from "@next/third-parties/google";
 import { uploadTechStackImage } from "@/app/actions";
 import useForm from "@/hooks/use-form";
+import { ERROR_MESSAGE } from "@/constants/error";
 
 export default function TitleForm() {
   const { isInitialized, techStack, theme, iconBoxStyle, title, setTitle } =
@@ -55,7 +56,7 @@ export default function TitleForm() {
       });
 
       if (!previewImageBlob) {
-        throw new Error("failed to create image blob");
+        throw new Error(ERROR_MESSAGE.FAILED_TO_CREATE_IMAGE_BLOB);
       }
 
       const formData = new FormData();
@@ -85,6 +86,10 @@ export default function TitleForm() {
       setIsUploading(false);
     }
   };
+
+  if (!isInitialized && techStack.length === 0) {
+    throw new Error(ERROR_MESSAGE.TECH_STACK_IS_NECESSARY);
+  }
 
   return (
     <>

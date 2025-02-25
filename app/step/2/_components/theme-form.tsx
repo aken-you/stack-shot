@@ -8,6 +8,7 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Theme } from "@/types/style";
 import useForm from "@/hooks/use-form";
+import { ERROR_MESSAGE } from "@/constants/error";
 
 export default function ThemeForm() {
   const { isInitialized, techStack, title, iconBoxStyle, theme, setTheme } =
@@ -16,6 +17,10 @@ export default function ThemeForm() {
   const storeTheme = (theme: Theme) => {
     sessionStorage.setItem("theme", theme);
   };
+
+  if (!isInitialized && techStack.length === 0) {
+    throw new Error(ERROR_MESSAGE.TECH_STACK_IS_NECESSARY);
+  }
 
   return (
     <>
